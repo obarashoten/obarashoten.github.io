@@ -21,7 +21,7 @@
         header { background-color: #333; color: white; position: fixed; width: 100%; top: 0; z-index: 1000; }
         .shop-name { text-align: center; padding: 10px 0; font-size: 1.1rem; border-bottom: 1px solid #555; }
         nav { display: flex; justify-content: center; overflow-x: auto; background: #444; }
-        nav button { background: none; border: none; color: white; padding: 15px 18px; cursor: pointer; font-size: 0.95rem; font-weight: bold; white-space: nowrap; }
+        nav button { background: none; border: none; color: white; padding: 15px 18px; cursor: pointer; font-size: 0.95rem; font-weight: bold; white-space: nowrap; display: flex; align-items: center; gap: 4px; }
         nav button.active { border-bottom: 3px solid var(--accent-silver); background: #555; }
         .page { display: none; padding-top: 100px; min-height: 100vh; box-sizing: border-box; }
         .page.active { display: block; animation: fadeIn 0.4s; }
@@ -60,6 +60,11 @@
         .modal-img { width: 100%; height: 300px; background-size: contain; background-repeat: no-repeat; background-position: center; margin-bottom: 20px; }
         .appeal-text { background: #fff0f3; padding: 12px; border-radius: 6px; font-weight: bold; color: #d04060; margin-bottom: 15px; border-left: 4px solid #ffb6c1; font-size: 0.95rem; }
         @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } .item-img { height: 150px; } .footer-flex { flex-direction: column; } .featured-display { flex-direction: column; } .display-img { height: 180px; } .display-header-img { height: 200px; } }
+        
+        /* アイコンを目立たせるスタイル */
+        .icon-animal { color: #8af013; text-shadow: 0 0 8px rgba(138, 240, 19, 0.6); font-weight: bold; }
+        .icon-ocean { color: #3adaff; text-shadow: 0 0 8px rgba(58, 218, 255, 0.6); font-weight: bold; }
+        .icon-seafood { color: #ffab91; vertical-align: middle; }
     </style>
 </head>
 <body>
@@ -67,9 +72,9 @@
         <div class="shop-name">小原書店 異業種POP UP</div>
         <nav>
             <button class="tab-btn active" id="tab-top" onclick="switchPage('page-top')">トップ</button>
-            <button class="tab-btn" id="tab-animal" onclick="switchPage('page-animal')">🐾アニマル</button>
-            <button class="tab-btn" id="tab-ocean" onclick="switchPage('page-ocean')">🦈紅茶</button>
-            <button class="tab-btn" id="tab-seafood" onclick="switchPage('page-seafood')">🦑海鮮珍味</button>
+            <button class="tab-btn" id="tab-animal" onclick="switchPage('page-animal')"><span class="icon-animal">🐾</span>アニマル</button>
+            <button class="tab-btn" id="tab-ocean" onclick="switchPage('page-ocean')"><span class="icon-ocean">🦈</span>紅茶</button>
+            <button class="tab-btn" id="tab-seafood" onclick="switchPage('page-seafood')"><span class="icon-seafood">🦑</span>海鮮珍味</button>
         </nav>
     </header>
 
@@ -119,7 +124,7 @@
 
             <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid #333;">
                 <h3 style="margin-top:0;">📖 「食はいのち」（橋本 志津／著、幻冬舎メディアコンサルティング、税込1760円）</h3>
-                <p>一関市藤沢町「Ark館ヶ森」の会長さんが書かれた、出版されたばかりのホヤホヤの新刊です！<br>現代の「食（添加物、効率重視など）」への危機感を背景に、半世紀にわたる牧場の挑戦や、自然と共生する農業の未来、そして「なぜあの人里離れた牧場に人が集まるのか（癒やしの空間づくり）」が綴られています。</p>
+                <p>一関市藤沢町「Ark館ヶ森」の会長さんが書かれた、出版されたばかりのホヤホヤの新刊です！<br>現代の「食（添加物、効率重視など）」への危機感を背景に、半世紀にわたる牧場の挑戦や、自然と共生する農業の未来、精度「なぜあの人里離れた牧場に人が集まるのか（癒やしの空間づくり）」が綴られています。</p>
             </div>
 
             <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid #005b8c;">
@@ -149,6 +154,7 @@
         </div>
     </div>
 
+    <!-- アニマルマルシェ -->
     <div id="page-animal" class="page">
         <div class="container">
             <h2 style="color: var(--accent-animal);">アニマルマルシェ</h2>
@@ -158,6 +164,7 @@
         </div>
     </div>
 
+    <!-- OCEAN-TEABAG -->
     <div id="page-ocean" class="page">
         <div class="container">
             <h2 style="color: var(--accent-ocean);">OCEAN-TEABAG</h2>
@@ -167,6 +174,7 @@
         </div>
     </div>
 
+    <!-- 北海道海鮮珍味 -->
     <div id="page-seafood" class="page">
         <div class="container">
             <h2 style="color: var(--accent-seafood);">北海道海鮮珍味</h2>
@@ -193,9 +201,8 @@
         const animalItems = [
             { rank: 1, name: "アニマニア S　ベルツノガエル", price: "税込1,540円", appeal: "カエルのぬいぐるみ、つぶらな瞳が可愛くて大人気です。", img:"1bekaeru.webp" },
             { rank: 2, name: "アニマニア　モウドクフキヤガエル(マグネット)", price: "税込1,320円", appeal: "アニマニアシリーズにかわいいマグネットが登場！いろんな場所にくっつけたりしてみてね。", img: "1MG.webp" },
-            { rank: 3, name: "わたぽ ぬいぐるみ 犬のなかま", price: "税込1,320円", appeal: "綿毛のように軽くてふわふわな触り心地をした
-「わたぽ」シリーズのぬいぐるみです。", img: "1inu.webp" },
-            { name: "その他 アニマルぬいぐるみ", price: "各種ご用意", appeal: "店頭で目が合った子をお迎えください！", img: "IMG_0059.JPG" }
+            { rank: 3, name: "わたぽ ぬいぐるみ 犬 of なかま", price: "税込1,320円", appeal: "綿毛のように軽くてふわふわな触り心地をした「わたぽ」シリーズのぬいぐるみです。", img: "1inu.webp" },
+            { name: "その他 アニマルぬいぐるみ", price: "各 税込1,210円", appeal: "店頭で目が合った子をお迎えください！", img: "IMG_0059.JPG" }
         ];
 
         const oceanItems = [
@@ -206,7 +213,7 @@
         ];
 
         const seafoodItems = [
-            { rank: 1, name: "トリュフクラッカーBOX", price: "税込486円", appeal: "1枚10円、たっぷり60枚入り。しかも美味しい！", img: "3tru.jpg" },
+            { rank: 1, name: "トリュフクラッカーBOX", price: "税込486円", appeal: "1枚10円、たっぷり 60枚入り。しかも美味しい！", img: "3tru.jpg" },
             { rank: 2, name: "浜焼ほたて", price: "税込1296円", appeal: "やわらかい食感の香ばしい味。噛めば噛むほど旨みが広がります。炊き立てご飯にも。", img: "3hotate.webp" },
             { rank: 3, name: "するめ（小）", price: "税込1296円", appeal: "完全無添加のするめはそのままでも、あぶって食べても、料理にも◎。", img: "3surume.png" },
             { name: "その他 北海道海鮮珍味", price: "各種ご用意", appeal: "北海道から届いた厳選おつまみシリーズ。", img: "IMG_0061.JPG" }
@@ -222,7 +229,7 @@
                 const safeImg = item.img ? item.img.replace(/'/g, "\\'") : '';
                 const safeAppeal = item.appeal ? item.appeal.replace(/'/g, "\\'") : '';
                 
-                g.innerHTML += `<div class="item-card" onclick="openModal('${safeName}','${safePrice}','${safeImg}','${safeAppeal}')">${r}<div class="item-img" ${imgStyle}>${item.img ? '' : '<span style="display:flex; height:100%; align-items:center; justify-content:center; color:#555; font-weight:bold;">店頭でチェック！</span>'}</div><div class="item-info"><h3>${item.name}</h3><p class="price">${item.price}</p></div></div>`;
+                g.innerHTML += `<div class="item-card" onclick="openModal('${safeName}','${safePrice}','safeImg','${safeAppeal}')">${r}<div class="item-img" ${imgStyle}>${item.img ? '' : '<span style="display:flex; height:100%; align-items:center; justify-content:center; color:#555; font-weight:bold;">店頭でチェック！</span>'}</div><div class="item-info"><h3>${item.name}</h3><p class="price">${item.price}</p></div></div>`;
             });
         }
         
