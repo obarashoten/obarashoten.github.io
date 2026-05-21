@@ -179,7 +179,7 @@
         <div class="container">
             <h2 style="color: var(--accent-seafood);">北海道海鮮珍味</h2>
             <img src="IMG_0061.JPG" alt="北海道海鮮珍味の店内" class="display-header-img">
-            <p class="page-desc">北の海から届いた、噛むほどに美味しい至高のおつまみ。<br>晩酌のお供や、ご家族の団らんの時間にぜひどうぞ。</p>
+            <p class="page-desc">北の海から届いた、噛むほどに美味しい至高のおつまみ。<br>晩酌のお供や、ご家族 of 団らんの時間にぜひどうぞ。</p>
             <div class="grid" id="grid-seafood"></div>
         </div>
     </div>
@@ -229,7 +229,8 @@
                 const safeImg = item.img ? item.img.replace(/'/g, "\\'") : '';
                 const safeAppeal = item.appeal ? item.appeal.replace(/'/g, "\\'") : '';
                 
-                g.innerHTML += `<div class="item-card" onclick="openModal('${safeName}','${safePrice}','safeImg','${safeAppeal}')">${r}<div class="item-img" ${imgStyle}>${item.img ? '' : '<span style="display:flex; height:100%; align-items:center; justify-content:center; color:#555; font-weight:bold;">店頭でチェック！</span>'}</div><div class="item-info"><h3>${item.name}</h3><p class="price">${item.price}</p></div></div>`;
+                // ★クリック部分の引数 'safeImg' を、変数として機能する '${safeImg}' に修正しました
+                g.innerHTML += `<div class="item-card" onclick="openModal('${safeName}','${safePrice}','${safeImg}','${safeAppeal}')">${r}<div class="item-img" ${imgStyle}>${item.img ? '' : '<span style="display:flex; height:100%; align-items:center; justify-content:center; color:#555; font-weight:bold;">店頭でチェック！</span>'}</div><div class="item-info"><h3>${item.name}</h3><p class="price">${item.price}</p></div></div>`;
             });
         }
         
