@@ -7,15 +7,13 @@
     <style>
         :root {
             --bg-top: #f4f6f9;
-            --bg-animal: #f1f8e9;
-            --bg-ocean: #e1f5fe;
-            --bg-seafood: #fbe9e7;
+            --bg-flyer: #ffffff;
             --accent-silver: #e0e6ed;
-            --accent-animal: #33691e;
-            --accent-ocean: #01579b;
-            --accent-seafood: #bf360c;
+            --accent-soba: #33691e;
+            --accent-tea: #01579b;
+            --accent-honey: #bf360c;
+            --accent-ohotuku: #d84315;
             --text-dark: #333333;
-            --rank-pink: #ffdae0;
         }
         body { margin: 0; font-family: 'Helvetica Neue', Arial, 'Hiragino Mincho ProN', 'Yu Mincho', serif; color: var(--text-dark); background-color: var(--bg-top); line-height: 1.6; }
         header { background-color: #333; color: white; position: fixed; width: 100%; top: 0; z-index: 1000; }
@@ -27,44 +25,37 @@
         .page.active { display: block; animation: fadeIn 0.4s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .container { max-width: 1000px; margin: 0 auto; padding: 20px 5% 80px; }
-        h2 { text-align: center; font-size: 1.8rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid; }
-        .page-desc { text-align: center; margin-bottom: 30px; font-weight: bold; }
-        .display-header-img { width: 100%; height: 350px; object-fit: cover; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .item-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; position: relative; transition: transform 0.2s; }
-        .item-card:hover { transform: translateY(-5px); }
-        .item-img { height: 220px; background-size: cover; background-position: center; background-color: #eee; }
-        .item-info { padding: 15px; text-align: center; }
-        .item-info h3 { margin: 0 0 8px; font-size: 1rem; color: var(--text-dark); height: 2.4em; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-        .price { color: #d9534f; font-weight: bold; font-size: 1.1rem; }
-        .rank { position: absolute; top: 10px; left: 10px; background: var(--rank-pink); color: #d04060; padding: 5px 12px; border-radius: 4px; font-family: sans-serif; font-weight: bold; font-size: 0.9rem; border: 1px solid #ffb6c1; z-index: 10; }
-        .featured-display { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; }
-        .display-card { flex: 1; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; cursor: pointer; }
+        
+        /* 4コマパネルのスタイル */
+        .featured-display { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 30px; }
+        .display-card { flex: 1 1 200px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; cursor: pointer; min-width: 200px; }
         .display-img { height: 250px; background-size: cover; background-position: center; transition: transform 0.5s ease; }
         .display-card:hover .display-img { transform: scale(1.05); }
         .display-text { position: absolute; bottom: 0; width: 100%; text-align: center; padding: 10px; color: white; font-weight: bold; font-size: 1.1rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        
+        /* チラシ掲載用（2ページ目）のスタイル */
+        #page-flyer { background-color: var(--bg-flyer); }
+        .flyer-wrapper { text-align: center; margin: 20px 0; }
+        .flyer-img { width: 100%; max-width: 900px; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        .flyer-points { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 30px; }
+        .point-badge { background: #fdf2f4; border: 2px solid #d9534f; color: #d9534f; padding: 10px 20px; border-radius: 50px; font-weight: bold; font-size: 0.95rem; }
+        .back-btn { display: inline-block; background: #333; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 30px; cursor: pointer; border: none; font-size: 1rem; transition: background 0.2s; }
+        .back-btn:hover { background: #555; }
+
+        /* フッター・その他 */
         .footer-section { background-color: #333; color: white; padding: 40px 30px; border-radius: 12px; margin-top: 30px; }
         .footer-flex { display: flex; flex-wrap: wrap; gap: 30px; align-items: center; }
         .footer-info { flex: 1 1 300px; text-align: center; }
         .footer-map { flex: 1 1 300px; height: 250px; border-radius: 8px; overflow: hidden; background: #eee; }
         .footer-map iframe { width: 100%; height: 100%; border: none; }
-        #page-animal { background-color: var(--bg-animal); }
-        #page-animal h2 { border-color: var(--accent-animal); color: var(--accent-animal); }
-        #page-ocean { background-color: var(--bg-ocean); }
-        #page-ocean h2 { border-color: var(--accent-ocean); color: var(--accent-ocean); }
-        #page-seafood { background-color: var(--bg-seafood); }
-        #page-seafood h2 { border-color: var(--accent-seafood); color: var(--accent-seafood); }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: white; width: 100%; max-width: 500px; padding: 30px; border-radius: 12px; position: relative; color: #333; }
-        .close { position: absolute; top: 10px; right: 20px; font-size: 2rem; cursor: pointer; }
-        .modal-img { width: 100%; height: 300px; background-size: contain; background-repeat: no-repeat; background-position: center; margin-bottom: 20px; }
-        .appeal-text { background: #fff0f3; padding: 12px; border-radius: 6px; font-weight: bold; color: #d04060; margin-bottom: 15px; border-left: 4px solid #ffb6c1; font-size: 0.95rem; }
-        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } .item-img { height: 150px; } .footer-flex { flex-direction: column; } .featured-display { flex-direction: column; } .display-img { height: 180px; } .display-header-img { height: 200px; } }
         
-        /* アイコンを目立たせるスタイル */
-        .icon-animal { color: #8af013; text-shadow: 0 0 8px rgba(138, 240, 19, 0.6); font-weight: bold; }
-        .icon-ocean { color: #3adaff; text-shadow: 0 0 8px rgba(58, 218, 255, 0.6); font-weight: bold; }
-        .icon-seafood { color: #ffab91; vertical-align: middle; }
+        @media (max-width: 600px) { .footer-flex { flex-direction: column; } .featured-display { flex-direction: column; } .display-card { min-width: 100%; } .display-img { height: 180px; } .point-badge { width: 100%; text-align: center; } }
+        
+        /* アイコンのスタイル */
+        .icon-soba { color: #8af013; text-shadow: 0 0 8px rgba(138, 240, 19, 0.6); font-weight: bold; }
+        .icon-tea { color: #3adaff; text-shadow: 0 0 8px rgba(58, 218, 255, 0.6); font-weight: bold; }
+        .icon-honey { color: #ffab91; vertical-align: middle; }
+        .icon-ohotuku { color: #ff6e40; vertical-align: middle; }
     </style>
 </head>
 <body>
@@ -72,59 +63,65 @@
         <div class="shop-name">小原書店 異業種POP UP</div>
         <nav>
             <button class="tab-btn active" id="tab-top" onclick="switchPage('page-top')">トップ</button>
-            <button class="tab-btn" id="tab-animal" onclick="switchPage('page-animal')"><span class="icon-animal">🐾</span>アニマル</button>
-            <button class="tab-btn" id="tab-ocean" onclick="switchPage('page-ocean')"><span class="icon-ocean">🦈</span>紅茶</button>
-            <button class="tab-btn" id="tab-seafood" onclick="switchPage('page-seafood')"><span class="icon-seafood">🦑</span>海鮮珍味</button>
+            <button class="tab-btn" id="tab-soba" onclick="switchPage('page-flyer', 'soba')"><span class="icon-soba">🥢</span>池森そば</button>
+            <button class="tab-btn" id="tab-tea" onclick="switchPage('page-flyer', 'tea')"><span class="icon-tea">🍵</span>京都ごえん茶</button>
+            <button class="tab-btn" id="tab-honey" onclick="switchPage('page-flyer', 'honey')"><span class="icon-honey">🍯</span>& HONEY</button>
+            <button class="tab-btn" id="tab-ohotuku" onclick="switchPage('page-flyer', 'ohotuku')"><span class="icon-ohotuku">🐟</span>オホーツク海鮮ギフト</button>
         </nav>
     </header>
 
     <div id="page-top" class="page active">
         <div class="container">
             <div style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #ddd; line-height: 1.8;">
-                <h1 style="color: #0073a8; text-align: center; font-size: 1.8rem; margin: 0 0 15px;">【小原書店】<br>初夏の3大POP UP 開催中！</h1>
-                <p style="margin-top: 0;text-align: center;">いつもありがとうございます。小原書店です。<br>
-                5月から新しくスタートした「3つの異業種ポップアップ」。<br><strong>6月30日まで開催</strong>しております！</p>
+                <h1 style="color: #0073a8; text-align: center; font-size: 1.8rem; margin: 0 0 15px;">【小原書店】<br>夏ギフト特集の4大POP UP 開催中！</h1>
+                <p style="margin-top: 0; text-align: center;">いつもありがとうございます。小原書店です。<br>
+                7月から新しくスタートした「4つの異業種ポップアップ」。<br><strong>8月31日まで開催</strong>しております！</p>
 
                 <ul style="list-style: none; padding-left: 0; font-weight: bold; color: #333; margin: 15px 0; text-align: center;">
-                    <li style="margin-bottom: 5px;">1.「アニマルマルシェ」　動物園の人気者が大集合！</li>
-                    <li style="margin-bottom: 5px;">2.「OCEAN-TEABAG」　面白い紅茶！プレゼントに最適</li>
-                    <li style="margin-bottom: 5px;">3.「北海道海鮮珍味」　北の海から届いた至高のおつまみ</li>
+                    <li style="margin-bottom: 5px;">1.「池森そば」 夏はそば！厳選７種類のそばを食べ比べ</li>
+                    <li style="margin-bottom: 5px;">2.「京都ぎょくろのごえん茶」 夏のごあいさつギフト！</li>
+                    <li style="margin-bottom: 5px;">3.「& HONEY」 夏の朝に、ひとさじのごほうび！</li>
+                    <li style="margin-bottom: 5px;">4.「オホーツク海鮮ギフト」 お中元や帰省のごちそうを網走から。</li>
                 </ul>
 
                 <p style="text-align: center; font-weight: bold; color: #0073a8; margin-top: 25px; margin-bottom: 0;">
-                    各コーナーのラインナップを写真でご覧いただけます！<br>
+                    チラシをご覧いただけます！<br>
                     ぜひ以下の写真をタップしてくださいm(_ _)m
                 </p>
             </div>
 
             <div class="featured-display">
-                <div class="display-card" onclick="switchPage('page-animal')">
-                    <div class="display-img" style="background-image:url('IMG_0048.jpg')"></div>
-                    <div class="display-text" style="background: rgba(51, 105, 30, 0.8);">アニマルマルシェ</div>
+                <div class="display-card" onclick="switchPage('page-flyer', 'soba')">
+                    <div class="display-img" style="background-image:url('IMG_1.jpg')"></div>
+                    <div class="display-text" style="background: rgba(51, 105, 30, 0.8);">池森そば</div>
                 </div>
-                <div class="display-card" onclick="switchPage('page-ocean')">
-                    <div class="display-img" style="background-image:url('IMG_0047.jpg')"></div>
-                    <div class="display-text" style="background: rgba(1, 87, 155, 0.8);">OCEAN-TEABAG</div>
+                <div class="display-card" onclick="switchPage('page-flyer', 'tea')">
+                    <div class="display-img" style="background-image:url('IMG_2.jpg')"></div>
+                    <div class="display-text" style="background: rgba(1, 87, 155, 0.8);">京都ぎょくろのごえん茶</div>
                 </div>
-                <div class="display-card" onclick="switchPage('page-seafood')">
-                    <div class="display-img" style="background-image:url('IMG_0046.jpg')"></div>
-                    <div class="display-text" style="background: rgba(191, 54, 12, 0.8);">北海道海鮮珍味</div>
+                <div class="display-card" onclick="switchPage('page-flyer', 'honey')">
+                    <div class="display-img" style="background-image:url('IMG_3.jpg')"></div>
+                    <div class="display-text" style="background: rgba(191, 54, 12, 0.8);">& HONEY</div>
+                </div>
+                <div class="display-card" onclick="switchPage('page-flyer', 'ohotuku')">
+                    <div class="display-img" style="background-image:url('IMG_4.jpg')"></div>
+                    <div class="display-text" style="background: rgba(216, 67, 21, 0.8);">オホーツク海鮮ギフト</div>
                 </div>
             </div>
                 
             <div style="text-align: center; color: #aaa; margin: 20px 0;">◆◇◆◇◆◇◆◇◆◇◆◇◆</div>
 
-            <h3 style="color: #d9534f; text-align: center; margin-top:0;">【営業時間変更のお知らせ】（4月1日から）</h3>
+            <h3 style="color: #d9534f; text-align: center; margin-top:0;">【営業時間変更のお知らせ】（終了時間30分延長）</h3>
             <p style="text-align: center; font-weight: bold; font-size: 1.1rem; margin-bottom: 0;">
-                月曜日から土曜日　10時から18時まで<br>
-                日曜日　お休み
+                月曜日から土曜日 10時から18時30分まで<br>
+                日曜日 お休み
             </p>
 
             <div style="text-align: center; color: #aaa; margin: 20px 0;">◆◇◆◇◆◇◆◇◆◇◆◇◆</div>
 
             <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid #333;">
-                <h3 style="margin-top:0;">📖 「食はいのち」（橋本 志津／著、幻冬舎メディアコンサルティング、税込1760円）</h3>
-                <p>一関市藤沢町「Ark館ヶ森」の会長さんが書かれた、出版されたばかりのホヤホヤの新刊です！<br>現代の「食（添加物、効率重視など）」への危機感を背景に、半世紀にわたる牧場の挑戦や、自然と共生する農業の未来、精度「なぜあの人里離れた牧場に人が集まるのか（癒やしの空間づくり）」が綴られています。</p>
+                <h3 style="margin-top:0;">📖 「東日本大震災津波は終わらない」（桒田但馬／佐藤博／森本晋也 編、ナカニシヤ出版、税込3630円）</h3>
+                <p>一関市大東町興田出身の佐藤博さんと猿沢出身の菅原将樹さん（第23章）が共同執筆者としてかかわっていて、大東出身の2人が関係する書籍です。<br>2026/6/21付の岩手日報でも紹介されていました。<br>岩手15年の復興検証をベースに、未来の災害に備える防災を全国に発信する、「いわて防災復興研究会」を中心とした調査研究の成果です。</p>
             </div>
 
             <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid #005b8c;">
@@ -134,7 +131,7 @@
             
             <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid #777;">
                 <h3 style="margin-top:0;">📄 「５円コピー」好評稼働中！</h3>
-                <p>総会シーズン、経費半減！カラーコピーも30円。値上げしないでガンバってます。</p>
+                <p>総会シーズン、経費半減！カラーコピーも30円。</p>
             </div>
             
             <div class="footer-section">
@@ -142,112 +139,83 @@
                     <div class="footer-info">
                         <h3 style="margin-top:0; color:var(--accent-silver);">小原書店</h3>
                         <p style="margin-bottom: 10px;">岩手県一関市大東町摺沢字但馬崎１５－２</p>
-                        <p>電話：0191-75-3151<br>営業時間：10:00〜18:00<br>定休日：日曜日</p>
+                        <p>電話：0191-75-3151<br>営業時間：10:00〜18:30<br>定休日：日曜日</p>
                     </div>
                     <div class="footer-map">
-                        <iframe 
-                            src="https://maps.google.co.jp/maps?q=小原書店,+岩手県一関市大東町摺沢字但馬崎１５−２&output=embed&t=m&z=16&hl=ja" 
-                            allowfullscreen="" loading="lazy"></iframe>
+                        <iframe src="https://maps.google.co.jp/maps?q=小原書店,+岩手県一関市大東町摺沢字但馬崎１５−２&output=embed&t=m&z=16&hl=ja" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- アニマルマルシェ -->
-    <div id="page-animal" class="page">
-        <div class="container">
-            <h2 style="color: var(--accent-animal);">アニマルマルシェ</h2>
-            <img src="IMG_0059.JPG" alt="アニマルマルシェの店内" class="display-header-img">
-            <p class="page-desc">動物園の人気者が小原書店に大集合！<br>ちょっとしたプレゼントにご自宅用に。可愛い動物たちに癒やされてください。</p>
-            <div class="grid" id="grid-animal"></div>
-        </div>
-    </div>
+    <div id="page-flyer" class="page">
+        <div class="container" style="text-align: center;">
+            <h2 style="border-color: #0073a8; color: #0073a8;">夏ギフト特集 異業種POP UP チラシ</h2>
+            <p style="font-weight: bold; margin-bottom: 20px;">画像をピンチイン（指で拡大）して細かい内容までご覧いただけます。</p>
+            
+            <div class="flyer-wrapper">
+                <img src="obara-frier-1200px.jpg" alt="小原書店 夏ギフト特集 異業種POP UP チラシ" class="flyer-img">
+            </div>
 
-    <!-- OCEAN-TEABAG -->
-    <div id="page-ocean" class="page">
-        <div class="container">
-            <h2 style="color: var(--accent-ocean);">OCEAN-TEABAG</h2>
-            <img src="IMG_0060.JPG" alt="OCEAN-TEABAGの店内" class="display-header-img">
-            <p class="page-desc">カップの中で海の生き物が泳ぐ、面白いティーバッグ！<br>名作絵本「スイミー」とのコラボ商品など、ギフトに大好評です。</p>
-            <div class="grid" id="grid-ocean"></div>
-        </div>
-    </div>
+            <div class="flyer-points">
+                <div class="point-badge">🎟️ 大東町共通商品券も使えます！</div>
+                <div class="point-badge">🛜 店内 Free Wi-Fi 完備</div>
+                <div class="point-badge">🕒 営業時間 10:00〜18:30（30分延長中）</div>
+            </div>
 
-    <!-- 北海道海鮮珍味 -->
-    <div id="page-seafood" class="page">
-        <div class="container">
-            <h2 style="color: var(--accent-seafood);">北海道海鮮珍味</h2>
-            <img src="IMG_0061.JPG" alt="北海道海鮮珍味の店内" class="display-header-img">
-            <p class="page-desc">北の海から届いた、噛むほどに美味しい至高のおつまみ。<br>晩酌のお供や、ご家族の団らんの時間にぜひどうぞ。</p>
-            <div class="grid" id="grid-seafood"></div>
-        </div>
-    </div>
+            <div style="margin-top: 40px;">
+                <button class="back-btn" onclick="switchPage('page-top')">◀ トップページに戻る</button>
+            </div>
 
-    <div id="modal" class="modal">
-        <div class="modal-content"><span class="close" onclick="closeModal()">×</span><div class="modal-img" id="modal-img"></div><h3 id="modal-title"></h3><p class="price" id="modal-price"></p><div id="modal-appeal" class="appeal-text"></div><p id="modal-desc">小原書店 店頭にて実物をご覧いただけます。</p></div>
+            <div class="footer-section" style="text-align: left;">
+                <div class="footer-flex">
+                    <div class="footer-info">
+                        <h3 style="margin-top:0; color:var(--accent-silver);">小原書店</h3>
+                        <p style="margin-bottom: 10px;">岩手県一関市大東町摺沢字但馬崎１５－２</p>
+                        <p>電話：0191-75-3151<br>営業時間：10:00〜18:30<br>定休日：日曜日</p>
+                    </div>
+                    <div class="footer-map">
+                        <iframe src="https://maps.google.co.jp/maps?q=小原書店,+岩手県一関市大東町摺沢字但馬崎１５−２&output=embed&t=m&z=16&hl=ja" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        function switchPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            const tabMap = {'page-top':'tab-top', 'page-animal':'tab-animal', 'page-ocean':'tab-ocean', 'page-seafood':'tab-seafood'};
-            if(document.getElementById(tabMap[id])) document.getElementById(tabMap[id]).classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        const animalItems = [
-            { rank: 1, name: "アニマニア S　ベルツノガエル", price: "税込1,540円", appeal: "カエルのぬいぐるみ、つぶらな瞳が可愛くて大人気です。", img:"1bekaeru.webp" },
-            { rank: 2, name: "アニマニア　モウドクフキヤガエル(マグネット)", price: "税込1,320円", appeal: "アニマニアシリーズにかわいいマグネットが登場！いろんな場所にくっつけたりしてみてね。", img: "1MG.webp" },
-            { rank: 3, name: "わたぽ ぬいぐるみ 犬のなかま", price: "税込1,320円", appeal: "綿毛のように軽くてふわふわな触り心地をした「わたぽ」シリーズのぬいぐるみです。", img: "1inu.webp" },
-            { name: "その他 アニマルぬいぐるみ", price: "各 税込1,210円", appeal: "店頭で目が合った子をお迎えください！", img: "IMG_0059.JPG" }
-        ];
-
-        const oceanItems = [
-            { rank: 1, name: "サメ珈琲　ゲイシャゲレザ", price: "税込432円", appeal: "完熟した珈琲果実を果実そのままの状態で乾燥させて加工する「ナチュラル精製」", img: "2same.png" },
-            { rank: 2, name: "ネコだっこティー", price: "税込432円", appeal: "世界三大銘茶の一つ、ダージリンティー。中でもセカンドフラッシュは、香り、味、水色すべてにおいて最上級と称されます。", img: "2neko.jpg" },
-            { rank: 3, name: "UFOと牛", price: "税込324円", appeal: "茶葉は弊社でも大人気の香り高いアールグレイクラシック紅茶です。", img: "2UFO.jpg" },
-            { name: "その他 いきもの紅茶", price: "各種ご用意", appeal: "パッケージも可愛くギフトに大好評！", img: "IMG_0060.JPG" }
-        ];
-
-        const seafoodItems = [
-            { rank: 1, name: "トリュフクラッカーBOX", price: "税込486円", appeal: "1枚10円、たっぷり 60枚入り。しかも美味しい！", img: "3tru.jpg" },
-            { rank: 2, name: "浜焼ほたて", price: "税込1296円", appeal: "やわらかい食感の香ばしい味。噛めば噛むほど旨みが広がります。炊き立てご飯にも。", img: "3hotate.webp" },
-            { rank: 3, name: "するめ（小）", price: "税込1296円", appeal: "完全無添加のするめはそのままでも、あぶって食べても、料理にも◎。", img: "3surume.png" },
-            { name: "その他 北海道海鮮珍味", price: "各種ご用意", appeal: "北海道から届いた厳選おつまみシリーズ。", img: "IMG_0061.JPG" }
-        ];
-
-        function render(id, items, color) {
-            const g = document.getElementById(id);
-            items.forEach(item => {
-                const r = item.rank ? `<div class="rank">人気 ${item.rank}位</div>` : '';
-                const imgStyle = item.img ? `style="background-image:url('${item.img}')"` : `style="background-color:${color}"`;
-                const safeName = item.name.replace(/'/g, "\\'");
-                const safePrice = item.price.replace(/'/g, "\\'");
-                const safeImg = item.img ? item.img.replace(/'/g, "\\'") : '';
-                const safeAppeal = item.appeal ? item.appeal.replace(/'/g, "\\'") : '';
-                
-                // ★クリック部分の引数 'safeImg' を、変数として機能する '${safeImg}' に修正しました
-                g.innerHTML += `<div class="item-card" onclick="openModal('${safeName}','${safePrice}','${safeImg}','${safeAppeal}')">${r}<div class="item-img" ${imgStyle}>${item.img ? '' : '<span style="display:flex; height:100%; align-items:center; justify-content:center; color:#555; font-weight:bold;">店頭でチェック！</span>'}</div><div class="item-info"><h3>${item.name}</h3><p class="price">${item.price}</p></div></div>`;
+        function switchPage(pageId, tabName) {
+            // すべてのページを非表示にする
+            var pages = document.querySelectorAll('.page');
+            pages.forEach(function(page) {
+                page.classList.remove('active');
             });
-        }
-        
-        render('grid-animal', animalItems, '#c8e6c9');
-        render('grid-ocean', oceanItems, '#b3e5fc');  
-        render('grid-seafood', seafoodItems, '#ffccbc');
+            
+            // すべてのナビゲーションボタンの選択状態を解除する
+            var tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(function(tab) {
+                tab.classList.remove('active');
+            });
 
-        function openModal(t, p, i, a) {
-            document.getElementById('modal-title').innerText = t;
-            document.getElementById('modal-price').innerText = p;
-            document.getElementById('modal-appeal').innerText = a;
-            document.getElementById('modal-appeal').style.display = a ? 'block' : 'none';
-            const mi = document.getElementById('modal-img');
-            if(i) { mi.style.backgroundImage = `url('${i}')`; mi.innerHTML = ''; } else { mi.style.backgroundImage = 'none'; mi.innerHTML = '<span style="display:flex; height:100%; align-items:center; justify-content:center; color:#555; background:#eee; font-weight:bold;">店頭でチェック！</span>'; }
-            document.getElementById('modal').style.display = 'flex';
+            // 指定されたページを表示する
+            var targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // 指定されたタブボタンを選択状態にする
+            if (pageId === 'page-top') {
+                document.getElementById('tab-top').classList.add('active');
+            } else if (tabName) {
+                var activeTab = document.getElementById('tab-' + tabName);
+                if (activeTab) {
+                    activeTab.classList.add('active');
+                }
+            }
+
+            // ページ上部へスムーズにスクロールする
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
     </script>
 </body>
 </html>
